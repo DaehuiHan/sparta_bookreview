@@ -1,3 +1,3 @@
 # sparta book review
 
-- flask, mongoDB 사용
+- flask, mongoDB(pymongo) 사용
