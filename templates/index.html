@@ -61,10 +61,26 @@
       function showReview() {
         $.ajax({
           type: "GET",
-          url: "/review?sample_give=샘플데이터",
+          // FIXME: GET 1. 클라이언트가 가져가야할 데이터 없기 때문에 url에서 /review빼고 다 지워준다.
+          url: "/review",
           data: {},
           success: function (response) {
-            alert(response["msg"]);
+            // FIXME: GET 2. response에 서버가 넘긴 데이터가 담겨있기 때문에 원하는 데이터를 변수에 담아준다.
+            let reviews = response["all_reviews"];
+            // FIXME: GET 3. 이제 for문을 통해서 reviews로 넘어온 array(리스트)를 돌려서 하나씩 빼준다.
+            for (i = 0; i < reviews.length; i++) {
+              let title = reviews[i]["title"];
+              let author = reviews[i]["author"];
+              let review = reviews[i]["review"];
+
+              // FIXME: GET 4. 이제 가지고 온것을 백틱 안에 넣어서 붙여주면 된다.
+              let temp_html = `<tr>
+                                <td>${title}</td>
+                                <td>${author}</td>
+                                <td>${review}</td>
+                                </tr>`;
+              $("#reviews-box").append(temp_html);
+            }
           },
         });
       }
@@ -147,16 +163,7 @@
               <th scope="col">리뷰</th>
             </tr>
           </thead>
-          <tbody id="reviews-box">
-            <tr>
-              <td>왕초보 8주 코딩</td>
-              <td>김르탄</td>
-              <td>
-                역시 왕초보 코딩교육의 명가답군요. 따라하다보니 눈 깜짝할 사이에
-                8주가 지났습니다.
-              </td>
-            </tr>
-          </tbody>
+          <tbody id="reviews-box"></tbody>
         </table>
       </div>
     </div>
